@@ -4,9 +4,10 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
+    # Use the Traefik internal provider
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
   - http:
@@ -17,5 +18,5 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 80 # Argo is now serving plain HTTP here
+              number: 80
 
