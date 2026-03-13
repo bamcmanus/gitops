@@ -17,5 +17,5 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 443
+              number: 80 # Argo is now serving plain HTTP here
 
