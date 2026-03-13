@@ -34,6 +34,12 @@ install_argocd() {
     kubectl apply --server-side -n argocd \
       -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
   fi
+
+  echo "Configuring Argo CD for insecure mode via ConfigMap..."
+  kubectl patch configmap argocd-cmd-params-cm -n argocd --type merge -p '{"data": {"server.insecure": "true"}}'
+
+  # Restart the deployment to pick up the change
+  kubectl rollout restart deployment argocd-server -n argocd
 }
 
 wait_for_argocd() {
