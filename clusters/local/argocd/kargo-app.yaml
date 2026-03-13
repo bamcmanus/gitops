@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kargo
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: kargo
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: ghcr.io/akuity/kargo-charts
+      chart: kargo
+      targetRevision: 1.9.5
+      helm:
+        valueFiles:
+          # Use the full path relative to the 'path' defined below
+          - $values/clusters/local/kargo/values.yaml 
+    - repoURL: https://github.com/bamcmanus/gitops
+      targetRevision: main
+      ref: values
+      path: . # Set this to the repository root
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
