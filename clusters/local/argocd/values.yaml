@@ -430,6 +430,8 @@ configs:
   # Argo CD configuration parameters
   ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cmd-params-cm.yaml
   params:
+    # Run server without TLS
+    server.insecure: "true"
     # -- Create the argocd-cmd-params-cm configmap
     # If false, it is expected the configmap will be created by something else.
     create: true
