@@ -456,12 +456,13 @@ configs:
 
     # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
     # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
-    policy.default: ''
-
+    # This ensures the 'admin' user is actually a global admin
+    policy.default: role:readonly
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
-    policy.csv: ''
-    # Policy rules are in the form:
+    policy.csv: |
+      p, role:admin, applications, *, */*, allow
+      g, admin, role:admin # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
     #  g, subject, inherited-subject
