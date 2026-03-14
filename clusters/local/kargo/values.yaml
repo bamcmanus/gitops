@@ -470,7 +470,7 @@ api:
       ## @param api.ingress.tls.enabled Whether to associate a certificate with the Ingress resource.
       enabled: false
       ## @param api.ingress.tls.selfSignedCert Whether to generate a self-signed certificate for use with the API server's `Ingress` resource. If `true`, `cert-manager` CRDs **must** be present in the cluster. The chart will create and use its own namespaced `Issuer`. If `false`, a cert `Secret` with the name specified by `api.ingress.tls.secretName` **must** be provided in the same namespace as Kargo. The value in this field has no effect if `api.ingress.tls.enabled` is `false`.
-      selfSignedCert: true
+      selfSignedCert: false
       ## @param api.ingress.tls.secretName Name of the cert `Secret` for use with the API server's `Ingress` resource. When `api.ingress.tls.selfSignedCert` is `true`, this will be the name of the generated cert `Secret`. When `api.ingress.tls.selfSignedCert` is `false`, a cert `Secret` with this name **must** be provided in the same namespace as Kargo. The value in this field has no effect if `api.ingress.tls.enabled` is `false`.
       secretName: kargo-api-ingress-cert
     ## @param api.ingress.pathType You may want to use `Prefix` for some controllers (like AWS LoadBalancer Ingress controller), which don't support `/` as wildcard path when pathType is set to `ImplementationSpecific`
@@ -797,7 +797,7 @@ externalWebhooksServer:
       ## @param externalWebhooksServer.ingress.tls.enabled Whether to associate a certificate with the Ingress resource.
       enabled: false
       ## @param externalWebhooksServer.ingress.tls.selfSignedCert Whether to generate a self-signed certificate for use with the external webhook server's `Ingress` resource. If `true`, `cert-manager` CRDs **must** be present in the cluster. The chart will create and use its own namespaced `Issuer`. If `false`, a cert `Secret` with the name specified by `externalWebhooksServer.ingress.tls.secretName` **must** be provided in the same namespace as Kargo. The value in this field has no effect if `externalWebhooksServer.ingress.tls.enabled` is `false`.
-      selfSignedCert: true
+      selfSignedCert: false
       ## @param externalWebhooksServer.ingress.tls.secretName Name of the cert `Secret` for the external webhooks server's `Ingress` resource. When `externalWebhooksServer.ingress.tls.selfSignedCert` is `true`, this will be the name of the generated cert `Secret`. When `externalWebhooksServer.ingress.tls.selfSignedCert` is `false`, a cert `Secret` with this name **must** be provided in the same namespace as Kargo. The value in this field has no effect if `externalWebhooksServer.ingress.tls.enabled` is `false`.
       secretName: kargo-external-webhooks-server-ingress-cert
     ## @param externalWebhooksServer.ingress.pathType You may want to use `Prefix` for some controllers (like AWS LoadBalancer Ingress controller), which don't support `/` as wildcard path when pathType is set to `ImplementationSpecific`
