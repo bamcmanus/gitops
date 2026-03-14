@@ -8,8 +8,9 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     # Tells Traefik to handle the TLS handshake
     traefik.ingress.kubernetes.io/router.tls: "true"
-    # Essential for Argo CD's API/GRPC to work over Ingress
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # CRITICAL: This replaces the nginx backend-protocol annotation.
+    # It tells Traefik the pod is NOT using TLS (because of the --insecure flag).
+    traefik.ingress.kubernetes.io/service.serversscheme: http
 spec:
   rules:
   - host: argocd.local  # <--- This must match your /etc/hosts entry
