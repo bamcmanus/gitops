@@ -89,7 +89,7 @@ rbac:
 ## @section Webhooks
 webhooks:
   ## @param webhooks.register Whether to create `ValidatingWebhookConfiguration` and `MutatingWebhookConfiguration` resources.
-  register: true
+  register: false
 
 ## @section KubeConfigs
 ## @descriptionStart
