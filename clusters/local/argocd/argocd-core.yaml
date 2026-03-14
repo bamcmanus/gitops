@@ -20,3 +20,10 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true      # Deletes resources that are no longer in Git
+      selfHeal: true   # Automatically fixes resources if they are changed manually
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true # This fixes your "Annotation too long" error
