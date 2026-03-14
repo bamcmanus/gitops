@@ -2427,30 +2427,30 @@ server:
   # Argo CD server ingress configuration
   ingress:
     # -- Enable an ingress resource for the Argo CD server
-    enabled: false
+    enabled: true
+    # -- Defines which ingress controller will implement the resource
+    ingressClassName: traefik
+    # -- Additional ingress annotations
+    ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
+    annotations:
+      # Tell Traefik to use the HTTPS entrypoint
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      # This is the crucial line for --insecure mode
+      traefik.ingress.kubernetes.io/service.serversscheme: http
+    # -- The path to Argo CD server
+    paths:
+      - /
+    # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
+    pathType: Prefix
     # -- Specific implementation for ingress controller. One of `generic`, `aws` or `gke`
     ## Additional configuration might be required in related configuration sections
     controller: generic
     # -- Additional ingress labels
     labels: {}
-    # -- Additional ingress annotations
-    ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
-    annotations: {}
-      # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-
-    # -- Defines which ingress controller will implement the resource
-    ingressClassName: ""
-
     # -- Argo CD server hostname
     # @default -- `""` (defaults to global.domain)
-    hostname: ""
-
-    # -- The path to Argo CD server
-    path: /
-
-    # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
-    pathType: Prefix
+    hostname: "argocd.local"
 
     # -- Enable TLS configuration for the hostname defined at `server.ingress.hostname`
     ## TLS certificate will be retrieved from a TLS secret `argocd-server-tls`
