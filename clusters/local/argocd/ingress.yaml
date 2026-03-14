@@ -4,13 +4,16 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
-    # Use the Traefik internal provider
-    kubernetes.io/ingress.class: traefik
+    # Traefik-specific entrypoint for k3d
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    # Tells Traefik to handle the TLS handshake
     traefik.ingress.kubernetes.io/router.tls: "true"
+    # Essential for Argo CD's API/GRPC to work over Ingress
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   rules:
-  - http:
+  - host: argocd.local  # <--- This must match your /etc/hosts entry
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -18,5 +21,5 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 80
+              number: 443
 

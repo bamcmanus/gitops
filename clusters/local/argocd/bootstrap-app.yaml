@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/bamcmanus/gitops
     targetRevision: HEAD
     path: clusters/local/argocd
+    directory:
+      # This prevents the Root App from trying to "deploy" the config files
+      exclude: '{values.yaml}'
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
